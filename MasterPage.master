@@ -1,0 +1,180 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html lang="en">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <link href="/CssDesign/Site.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/Images/Site/ticket.ico" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- START OF NAV -->
+        <div class="header">
+            <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <a id="A1" class="navbar-brand" runat="server" href="~/">
+                                    <img style="max-width: 100px; margin-top: -12px;" src="/Images/Site/iTicketsLogo.png">
+                                </a>
+                            </div>
+
+                            <div class="navbar-right">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <div class="navbar-form" role="search">
+                                            <asp:Panel ID="SearchPanel" runat="server" DefaultButton="SearchButton">
+                                                <div class="input-group">
+                                                    <asp:TextBox ID="SearchTextBox" runat="server" type="text" class="form-control" placeholder="Search..."></asp:TextBox>
+                                                    <span class="input-group-btn">
+
+                                                        <asp:LinkButton class="btn btn-warning" ID="SearchButton" runat="server" OnClick="SearchButton_Click">&nbsp<span class="glyphicon glyphicon-search"></span></asp:LinkButton>
+                                                    </span>
+                                                </div>
+                                            </asp:Panel>
+                                        </div>
+                                    </li>
+
+                                    <%if (Session["isAdmin"] != null)
+                                      {%>
+                                    <li class="dropdown">
+                                        <asp:HyperLink href="" runat="server" ID="adminMenu" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span> Manage <span class="caret"></span></asp:HyperLink>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="/Admin/AddShow.aspx"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp Add a new show</a></li>
+                                            <li><a href="/admin/AddSchedule.aspx"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp Add a schedule to a show</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="/Admin/EditShows.aspx"><span class="glyphicon glyphicon-pencil"></span>&nbsp Edit a show</a></li>
+                                            <li><a href="/Admin/EditSchedule.aspx"><span class="glyphicon glyphicon-pencil"></span>&nbsp Edit a show's schedule</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="/Admin/Statistics.aspx"><span class="glyphicon glyphicon-stats"></span>&nbsp Get statistics</a></li>
+                                        </ul>
+                                    </li>
+                                    <%} %>
+
+
+                                    <li>
+                                        <asp:LinkButton ID="loginButton" runat="server" OnClick="LoginClick" data-toggle="modal" data-target=".loginModal"><span class="glyphicon glyphicon-log-in"></span> Login</asp:LinkButton></li>
+                                    <li>
+                                        <asp:HyperLink class="animation-link" ID="signUpButton" runat="server" href="/Client/Registration.aspx"><span class="glyphicon glyphicon-edit"></span> Sign up</asp:HyperLink></li>
+
+
+                                    <%if (Session["name"] != null)
+                                      {%>
+                                    <li class="dropdown">
+                                        <%}
+                                      else
+                                      { %>
+                                    <li>
+                                        <%} %>
+                                        <asp:HyperLink href="" runat="server" ID="userNameLogin" class="dropdown-toggle" data-toggle="dropdown">
+                                    Hello Guest
+                                        </asp:HyperLink>
+                                        <%if (Session["name"] != null)
+                                          {%>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="/Client/MyAccount.aspx"><span class="glyphicon glyphicon-user"></span>&nbsp My Account</a></li>
+                                            <li><a href="/Client/MyPurchases.aspx"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp My purchases</a></li>
+                                            <li><a href="/Client/MyPoints.aspx"><span class="glyphicon glyphicon-star"></span>&nbsp My Points</a></li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <asp:LinkButton ID="logoutButton" runat="server" OnClick="LogoutClick"><span class="glyphicon glyphicon-log-out"></span>&nbsp Logout</asp:LinkButton></li>
+                                            <!-- <li class="divider"></li>
+                                            <li><a href="/ContactUs.aspx"><span class="glyphicon glyphicon-send"></span>&nbsp Contact Us</a></li> -->
+                                        </ul>
+                                        <%} %>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- END OF NAV-->
+
+        <!-- START OF CONTENT-->
+
+        <div class="body-content">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <!-- END OF CONTENT -->
+
+        <div class="bg_cover"></div>
+
+        <!-- START OF FOOTER -->
+        <div class="navbar navbar-inverse navbar-fixed-bottom text-center" id="footer">
+            <footer>
+                <p>&copy; All rights reserved to iTickets <%: DateTime.Now.Year %></p>
+            </footer>
+        </div>
+        <!-- END OF FOOTER-->
+
+
+
+
+        <!-- END OF PAGE -->
+        <asp:ContentPlaceHolder ID="beforeContainer" runat="server">
+        </asp:ContentPlaceHolder>
+
+        <!-- pop up login -->
+        <div class="modal fade loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="glyphicon glyphicon-log-in pull-left"></span>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title text-center" id="myModalLabel">Login</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <asp:Panel ID="LogInPanel" runat="server" DefaultButton="LoginBtn">
+                            <div class="input-group form-group">
+                                <asp:TextBox ID="UserNameTextBox" class="form-control" runat="server" placeholder="Email"></asp:TextBox>
+                                <span class="input-group-addon glyphicon glyphicon-envelope"></span>
+                            </div>
+                            <div class="input-group form-group">
+                                <asp:TextBox ID="PasswordTextBox" class="form-control" runat="server" TextMode="password" placeholder="Password"></asp:TextBox>
+                                <span class="input-group-addon glyphicon glyphicon-asterisk"></span>
+                            </div>
+                            <asp:Label class="errorMessage" ID="Label1" runat="server" Text=""></asp:Label>
+                            <br />
+                            <asp:Button ID="LoginBtn" class="btn btn-warning" runat="server" OnClick="Button1_Click" Text="Login" />
+                        </asp:Panel>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- END OF POPUP-->
+        <script src="/Scripts/jquery-1.9.1.js"></script>
+        <script src="/Scripts/bootstrap.js"></script>
+        <script src="/Scripts/loginScript.js"></script>
+
+    </form>
+</body>
+</html>
